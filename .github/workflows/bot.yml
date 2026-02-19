@@ -25,11 +25,11 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        working-directory: PROJECT_DIR
+        working-directory: ARC#
         run: dotnet build -c Release --no-restore
 
       - name: Run bot
-        working-directory: PROJECT_DIR
+        working-directory: ARC#
         run: dotnet run -c Release --no-build
         env:
           BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
