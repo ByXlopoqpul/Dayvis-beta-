@@ -1,0 +1,30 @@
+name: Telegram Bot Runner
+
+on:
+  schedule:
+    # каждые 15 минут, 07:00–00:00 Бишкек (UTC+6) = 01:00–18:00 UTC
+    - cron: '*/15 1-18 * * *'
+  workflow_dispatch:
+
+jobs:
+  run-bot:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.0.x'
+
+      - name: Restore
+        run: dotnet restore
+
+      - name: Build
+        run: dotnet build -c Release --no-restore
+
+      - name: Run bot
+        run: dotnet run -c Release --no-build
+        env:
+          BOT_TOKEN: ${{ secrets.BOT_TOKEN }}
